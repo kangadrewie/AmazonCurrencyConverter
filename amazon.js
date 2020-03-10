@@ -15,13 +15,13 @@ function fetchRates() {
 			if (element_stripped.startsWith('£')) {
 				
 				price = x[index].innerHTML;
-				price_cleaned = price.replace(/\s/g, "");
+				price_cleaned = price.replace(/\s/g&&',', "");
 				price_stripped = price_cleaned.substring(1, price.length);
 				console.log(price_stripped);
 
-				conversion = ((parseFloat(price_stripped) * eur).toFixed(2)).toString();
+				conversion = (parseFloat(price_stripped) * eur).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2});
 				console.log(price_stripped);
-				x[index].innerHTML = '€' + conversion;
+				x[index].innerHTML = '€' + conversion.toString();
 			}
 		});
 
@@ -29,3 +29,5 @@ function fetchRates() {
 }
 
 fetchRates();
+
+element.addEventListener("click", fetchRates);
