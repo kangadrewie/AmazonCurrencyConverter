@@ -19,7 +19,7 @@ function fetchRates() {
 				price_stripped = price_cleaned.substring(1, price.length);
 				console.log(price_stripped);
 
-				conversion = (parseFloat(price_stripped) * eur).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2});
+				conversion = (parseFloat(price_stripped) * eur).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 				console.log(price_stripped);
 				x[index].innerHTML = '€' + conversion.toString();
 			}
@@ -29,5 +29,3 @@ function fetchRates() {
 }
 
 fetchRates();
-
-element.addEventListener("click", fetchRates);
