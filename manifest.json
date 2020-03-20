@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Amazon Currency Converter",
+  "version": "0.1",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.amazon.co.uk/*"
+      ],
+      "js": ["jquery-3.4.0.min.js", "content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "browser_action": {
+      "default_popup": "popup.html"
+  },
+  "permissions": [
+      "webNavigation",
+      "activeTab",
+      "tabs"
+  ]
+}
