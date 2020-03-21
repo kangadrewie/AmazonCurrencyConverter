@@ -1,10 +1,10 @@
-function conversion(currency) {
-	x = document.querySelectorAll('.a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .olp-from');
-	// x = document.querySelectorAll('.a-text-strike');
+function conversion() {
+	console.log('converted');
+	x = document.querySelectorAll('.a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .olp-from, .a-color-base, .a-price-whole');
+	currency = 1.18;
 	Array.from(x).forEach((element, index) => {
 		element = x[index].innerHTML
 		element_stripped = element.trim()
-		console.log(element_stripped);
 		if (element_stripped.startsWith('£')) {
 			
 			price = x[index].innerHTML;
@@ -25,20 +25,29 @@ function fetchRates() {
 		})
 	.then((data) => {
 		eur = data.rates['EUR'];
-
-		conversion(eur);
+		// setInterval(hello, 500);
 	  });
 }
 
 
+function hello() {
+	console.log('hello');
+}
+i = 1;
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
+  	
+  	i++;
+  	console.log(i);
+  	if (i == 2) {
+    	intervalId = setInterval(conversion, 5);
+  	}
 
-  	if (request.message === 'page_loading') {
-  		console.log('loading');
-  		if (request.message === 'page_completed') {
-  			console.log('complete');
-  			}
-  		}
+	if (request.message === 'page_complete') {
+		clearInterval(intervalId);
+  		console.log('completed');
+  		conversion(eur);
+  		i=1;
+		}
 	}
 );
