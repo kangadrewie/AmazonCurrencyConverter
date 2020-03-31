@@ -44,7 +44,7 @@ function conversion() {
 		});
 	}
 
-	x = document.querySelectorAll('[data-maple-math], #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, a-size-medium a-color-price');
+	x = document.querySelectorAll('[data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, a-size-medium a-color-price');
 	Array.from(x).forEach((element, index) => {
 		// console.log(currency)
 		element = x[index].innerHTML
@@ -70,16 +70,9 @@ chrome.runtime.onMessage.addListener(
 
 		if (request.status === 'loading') {
 			currency = request.currency
-			//Fire every 5 ms until page has loaded
+			//Fire every 10 ms until page has loaded
 
-			intervalId = setInterval(conversion, 20);
-		}
-
-		if (request.status === 'complete') {
-
-			//Stop Coversion
-			console.log('complete')
-			clearInterval(intervalId)
+			intervalId = setInterval(conversion, 10);
 		}
 
 });
