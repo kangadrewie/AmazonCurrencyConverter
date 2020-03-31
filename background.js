@@ -34,23 +34,3 @@ function fetchRates() {
 }
 
 fetchRates();
-
-// chrome.tabs.onUpdated.addListener(function (tabId , info) {
-//     // Send a message to the active tab
-// 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-// 		var activeTab = tabs[0];
-// 		chrome.tabs.sendMessage(activeTab.id, {content: "message", type: "m2"});
-// 		});
-
-// 	if (info.status === 'complete') {
-
-// 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-// 			var activeTab = tabs[0];
-// 			chrome.tabs.sendMessage(activeTab.id, {content: "message", type: "m3"});
-// 			});
-// 		}
-
-		
-// });
-
-
