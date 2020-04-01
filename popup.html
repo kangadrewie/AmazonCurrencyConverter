@@ -8,46 +8,68 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     type="text/css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
-  <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+  <link rel="stylesheet" href="converter_styles.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
 </head>
 <body>
-<style>
-/* Style The Dropdown Button */
 
-body {
-  width: 200px;
-  height: 250px;
-  background-color: #333;
-}
 
-#container {
-  max-height: 250px;
-  width: 100%;
-}
 
-#currencies {
-  top: 25px;
-  width: 75%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-h3 {
-  margin-top: 25px;
-  text-align: center;
-  color: white;
-}
-
-</style>
 <div id="container">
-  <h3>Amazon Currency Converter</h2>
-  <select class="form-control dropdown" id="currencies">
-    <option>Euro</option>
-    <option>US Dollars</option>
-  </select> 
+  <img src="Logo.png">
+  <h2 id="hello">AMAZON CURRENCY COVERTER</h2>
+    <form id="app-cover">
+            <div id="select-box">
+                    <input type="checkbox" id="options-view-button">
+                    <div id="select-button" class="brd">
+                            <div id="selected-value">
+                                <span>Select Currency</span>
+                            </div>
+                            <div id="chevrons">
+                                    <i class="fas fa-chevron-up"></i>
+                                    <i class="fas fa-chevron-down"></i>
+                            </div>
+                    </div>
+                    <div id="options">
+                            <div class="option">
+                                    <input class="s-c top" type="radio" name="platform" value="codepen">
+                                    <input class="s-c bottom" type="radio" name="platform" value="codepen">
+                                    <i class="fas fa-euro-sign"></i>
+                                    <span class="label">Euro</span>
+                                    <span class="opt-val">Euro</span>
+                            </div>
+                            <div class="option">
+                                    <input class="s-c top" type="radio" name="platform" value="dribbble">
+                                    <input class="s-c bottom" type="radio" name="platform" value="dribbble">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="label">US Dollar</span>
+                                    <span class="opt-val">US Dollar</span>
+                            </div>
+                            <div class="option">
+                                    <input class="s-c top" type="radio" name="platform" value="behance">
+                                    <input class="s-c bottom" type="radio" name="platform" value="behance">
+                                    <i class="fas fa-pound-sign"></i>
+                                    <span class="label">GBP Pound</span>
+                                    <span class="opt-val">GBP Pound</span>
+                            </div>
+                            <div class="option">
+                                    <input class="s-c top" type="radio" name="platform" value="hackerrank">
+                                    <input class="s-c bottom" type="radio" name="platform" value="hackerrank">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="label">CAD Dollars</span>
+                                    <span class="opt-val">CAD Dollars</span>
+                            </div>
+                            <div id="option-bg"></div>
+                    </div>
+            </div>
+    </form>
+  <h4 id="currencyValue">EUR - 1.26784</h4>
+  <h5>Last Updated: 6 minutes ago</h5>
 </div>
 
 </div>
+  <script type="text/javascript" src="popup.js"></script>
+  <script type="text/javascript" src="background.js"></script>
 </body>
 </html>
