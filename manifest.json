@@ -10,16 +10,18 @@
       "matches": [
         "https://www.amazon.co.uk/*"
       ],
-      "js": ["jquery-3.4.0.min.js", "content.js"],
+      "js": ["jquery-3.4.0.min.js", "content.js", "popup.js"],
       "run_at": "document_start"
     }
   ],
   "browser_action": {
+      "default_icon": "Logo.png",
       "default_popup": "popup.html"
   },
   "permissions": [
       "webNavigation",
       "activeTab",
-      "tabs"
+      "tabs",
+      "storage"
   ]
 }
