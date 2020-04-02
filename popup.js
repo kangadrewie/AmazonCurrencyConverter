@@ -1,31 +1,13 @@
+let currencyRate;
 
-chrome.runtime.onMessage.addListener(
 
-	function sendCurrencyValue(request) {
+// popup.js
+chrome.storage.local.get(["currency", "currencyName"], function(data) {
+    if(typeof data.currency == "undefined") {
+        // That's kind of bad
+    } else {
+        let currencyRate = document.getElementById('currencyRate')
+        currencyRate.innerHTML = data.currencyName + ' - ' + data.currency
 
-		currency = request.currency
-		console.log(currency)
-
+    }
 });
-
-
-function clickHandler(e) {
-    chrome.tabs.executeScript({
-        code: document.getElementById('currencyValue').value,
-        allFrames: true
-    }, function(result) {
-        console.log(results);
-    });
-}
-
-
-function popup(){
-    alert(1);
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    var activeTab = tabs[0];
-    chrome.tabs.sendMessage(activeTab.id, {"message": "start"});
-  });
-
-button1=document.getElementById("button1");
-button1.addEventListener('click', popup)
-}
