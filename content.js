@@ -64,15 +64,24 @@ function conversion() {
 
 }
 
+
 chrome.runtime.onMessage.addListener(
 
 	function init(request) {
 
 		if (request.status === 'loading') {
 			currency = request.currency
-			//Fire every 10 ms until page has loaded
+			currencySelection = request.currencyName
+			console.log('Message Received', currency)
+			console.log(currencySelection)
 
 			intervalId = setInterval(conversion, 10);
+
+			chrome.storage.local.set({currency: currency, currencyName: currencySelection});
+
+
 		}
 
 });
+  
+
