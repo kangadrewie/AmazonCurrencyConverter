@@ -1,4 +1,6 @@
 let currency;
+let currencyStringSymbol = '€';
+
 
 function conversion() {
 
@@ -16,10 +18,10 @@ function conversion() {
 				price_stripped = price_cleaned.substring(1, price.length);
 
 				conversion = (parseFloat(price_stripped) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-				x[index].innerHTML = '€' + conversion.toString();
+				x[index].innerHTML = currencyStringSymbol + conversion.toString();
 				}
 
-				if (x[index].innerText.startsWith('€')) {
+				if (x[index].innerText.startsWith(currencyStringSymbol)) {
 					x[index].classList.remove('a-offscreen')
 					x[index].classList.toggle('a-price-whole')
 
@@ -57,7 +59,7 @@ function conversion() {
 			price_stripped = price_cleaned.substring(1, price.length);
 
 			conversion = (parseFloat(price_stripped) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-			x[index].innerHTML = '€' + conversion.toString();
+			x[index].innerHTML = currencyStringSymbol + conversion.toString();
 			}
 		});
 
@@ -69,19 +71,23 @@ chrome.runtime.onMessage.addListener(
 
 	function init(request) {
 
-		if (request.status === 'loading') {
+		if (request.currencyName === 'EUR' && request.status === 'loading') {
 			currency = request.currency
 			currencySelection = request.currencyName
-			console.log('Message Received', currency)
-			console.log(currencySelection)
+			currencyStringSymbol = '€'
 
+			//Fire conversion every 10 ms.
 			intervalId = setInterval(conversion, 10);
+		}
 
-			chrome.storage.local.set({currency: currency, currencyName: currencySelection});
+		if (request.currencyName === 'USD' && request.status === 'loading') {
+			currency = request.currency
+			currencySelection = request.currencyName
+			currencyStringSymbol = '$'
 
-
+			//Fire conversion every 10 ms.
+			intervalId = setInterval(conversion, 10);
 		}
 
 });
   
-
