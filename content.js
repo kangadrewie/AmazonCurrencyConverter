@@ -71,18 +71,20 @@ chrome.runtime.onMessage.addListener(
 
 	function init(request) {
 
-		if (request.currencyName === 'EUR' && request.status === 'loading') {
+		if (request.currencyName === 'EUR') {
 			currency = request.currency
 			currencySelection = request.currencyName
+			console.log(currencySelection);
 			currencyStringSymbol = '€'
 
 			//Fire conversion every 10 ms.
 			intervalId = setInterval(conversion, 10);
 		}
 
-		if (request.currencyName === 'USD' && request.status === 'loading') {
+		if (request.currencyName === 'USD') {
 			currency = request.currency
 			currencySelection = request.currencyName
+			console.log(currencySelection);
 			currencyStringSymbol = '$'
 
 			//Fire conversion every 10 ms.
