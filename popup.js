@@ -1,17 +1,34 @@
+// function getSelectionState() {
+// 	chrome.storage.sync.get(["currencyName"], function(data) {
+// 	    if(typeof data.currency == "undefined") {
+// 	        // That's kind of bad
+// 	    } else {
+// 			document.getElementById("currencies").value = currencyName;
+
+// 	    }
+// 	});	
+// }
 
 
 
+function refreshPopupRates() {
 
-chrome.storage.local.get(["currency", "currencyName"], function(data) {
-    if(typeof data.currency == "undefined") {
-        // That's kind of bad
-    } else {
-        let currencyRate = document.getElementById('currencyRate')
-        currencyRate.innerHTML = data.currencyName + ' - ' + data.currency
+	chrome.storage.sync.get(["currencyName", "currency"], function(data) {
+	    if(typeof data.currencyName == "undefined") {
+	        console.log('Request Undefined');
+	    } else {
+	        let currencyRate = document.getElementById('currencyRate')
+	        currencyRate.innerHTML = data.currencyName + ' - ' + data.currency;
 
-    }
-});
+	        document.getElementById("currencies").value = data.currencyName
 
+
+
+	    }
+	});
+}
+
+refreshPopupRates();
 // document.getElementById('options').addEventListener("click", test);
 
 
@@ -22,7 +39,16 @@ function getDropdownValue() {
 	console.log(strUser);
 
 	//Store currency type and value in local storage for background.js to pull when popup is opened.
-	chrome.storage.local.set({currencyName: strUser});
+	chrome.storage.sync.set({currencyName: strUser});
+	
+	refreshSelection();
+	fetchRates();
+	refreshPopupRates();
+
+	// Initialize background page
+	chrome.runtime.getBackgroundPage(function(backgroundPage) {
+  		console = backgroundPage.console;
+	})
 }
 
 // document.getElementsByClassName('options').addEventListener("click", getDropdownValue);
