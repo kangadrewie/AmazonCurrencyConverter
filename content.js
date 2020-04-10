@@ -127,6 +127,11 @@ initialiseSetup = () => {
 
 initialiseSetup();
 
-// chrome.storage.onChanged.addListener(function(changes, namespace) {
-// 	window.location.reload();
-// });
+chrome.runtime.onMessage.addListener(function(request) {
+	if (request.updatePageStatus === 'reloadPage') {
+		console.log('reload')
+		window.location.reload();
+	} else {
+		console.log('Undefined');
+	}
+})
