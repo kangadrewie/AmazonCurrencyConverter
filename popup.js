@@ -6,16 +6,19 @@ refreshPopupRates = () => {
 
 	chrome.storage.sync.get(["currency", "currencyName", "timer"], function(data) {
 
-    	//Display current rates of selected currency
-        let currencyRate = document.getElementById('currencyRate')
-        currencyRate.innerHTML = data.currencyName + ' - ' + data.currency;
+		//Display current rates of selected currency
+		let currencyRate = document.getElementById('currencyRate')
+		currencyRate.innerHTML = data.currencyName + ' - ' + data.currency;
 
-        //Refresh selected dropdown item
+		//Refresh selected dropdown item
         document.getElementById("currencies").value = data.currencyName
 
-        let timer = document.getElementById('timer');
+		let timer = document.getElementById('timer');
+		timer.innerHTML = 'Last Updated - ' + ((timerUpdated - data.timer) + 1) + ' minutes ago';
+	});
 
-        timer.innerHTML = 'Last Updated - ' + ((timerUpdated - data.timer) + 1) + ' minutes ago'
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, {updatePageStatus: "reloadPage"});
 	});
 }
 refreshPopupRates();
@@ -30,7 +33,9 @@ getDropdownValue = () => {
 	chrome.storage.sync.set({currencyName: strUser});
 
 	//Fetch new rates with updated currency
-	fetchRates(strUser);	
+	fetchRates(strUser, function() {
+		refreshPopupRates();
+	});	
 }
 
 document.getElementById('currencies').addEventListener("change", getDropdownValue);
