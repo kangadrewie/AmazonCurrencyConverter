@@ -1,8 +1,7 @@
 let currency;
 let currencyStringSymbol = '€';
 
-
-function conversion() {
+conversion = () => {
 
 	if (document.URL.indexOf("https://www.amazon.co.uk/s?k=") >= 0){
 		y = document.querySelectorAll('.a-offscreen, .a-price-whole, .a-price-fraction');
@@ -46,7 +45,7 @@ function conversion() {
 		});
 	}
 
-	x = document.querySelectorAll('[data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, a-size-medium, a-color-price');
+	x = document.querySelectorAll('.a-list-item, [data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, a-size-medium, a-color-price');
 	Array.from(x).forEach((element, index) => {
 		// console.log(currency)
 		element = x[index].innerHTML
@@ -106,29 +105,28 @@ function conversion() {
 }
 
 
-chrome.runtime.onMessage.addListener(
 
-	function init(request) {
+initialiseSetup = () => {
+	chrome.storage.sync.get(["currency", "currencyName"], function(data) {
 
-		if (request.currencyName === 'EUR') {
-			currency = request.currency
-			currencySelection = request.currencyName
-			console.log(currencySelection);
+		if (data.currencyName === 'EUR') {
+			currency = data.currency
 			currencyStringSymbol = '€'
 
-			//Fire conversion every 10 ms.
 			intervalId = setInterval(conversion, 10);
-		}
+		} 
 
-		if (request.currencyName === 'USD' || request.currencyName === 'CAD') {
-			currency = request.currency
-			currencySelection = request.currencyName
-			console.log(currencySelection);
+		if (data.currencyName === 'USD' || data.currencyName === 'CAD') {
+			currency = data.currency
 			currencyStringSymbol = '$'
 
-			//Fire conversion every 10 ms.
 			intervalId = setInterval(conversion, 10);
 		}
+	});	
+};
 
-});
-  
+initialiseSetup();
+
+// chrome.storage.onChanged.addListener(function(changes, namespace) {
+// 	window.location.reload();
+// });
