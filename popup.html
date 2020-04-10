@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
   <link rel="stylesheet" href="converter_styles.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-
 </head>
 <body>
 
@@ -19,53 +18,15 @@
 <div id="container">
   <img src="Logo.png">
   <h2 id="hello">AMAZON CURRENCY COVERTER</h2>
-    <form id="app-cover">
-            <div id="select-box">
-                    <input type="checkbox" id="options-view-button">
-                    <div id="select-button" class="brd">
-                            <div id="selected-value">
-                                <span>Select Currency</span>
-                            </div>
-                            <div id="chevrons">
-                                    <i class="fas fa-chevron-up"></i>
-                                    <i class="fas fa-chevron-down"></i>
-                            </div>
-                    </div>
-                    <div id="options">
-                            <div class="option">
-                                    <input class="s-c top" type="radio" name="platform" value="codepen">
-                                    <input class="s-c bottom" type="radio" name="platform" value="codepen">
-                                    <i class="fas fa-euro-sign"></i>
-                                    <span class="label">Euro</span>
-                                    <span class="opt-val">Euro</span>
-                            </div>
-                            <div class="option">
-                                    <input class="s-c top" type="radio" name="platform" value="dribbble">
-                                    <input class="s-c bottom" type="radio" name="platform" value="dribbble">
-                                    <i class="fas fa-dollar-sign"></i>
-                                    <span class="label">US Dollar</span>
-                                    <span class="opt-val">US Dollar</span>
-                            </div>
-                            <div class="option">
-                                    <input class="s-c top" type="radio" name="platform" value="behance">
-                                    <input class="s-c bottom" type="radio" name="platform" value="behance">
-                                    <i class="fas fa-pound-sign"></i>
-                                    <span class="label">GBP Pound</span>
-                                    <span class="opt-val">GBP Pound</span>
-                            </div>
-                            <div class="option">
-                                    <input class="s-c top" type="radio" name="platform" value="hackerrank">
-                                    <input class="s-c bottom" type="radio" name="platform" value="hackerrank">
-                                    <i class="fas fa-dollar-sign"></i>
-                                    <span class="label">CAD Dollars</span>
-                                    <span class="opt-val">CAD Dollars</span>
-                            </div>
-                            <div id="option-bg"></div>
-                    </div>
-            </div>
-    </form>
-  <h4 id="currencyValue">EUR - 1.26784</h4>
-  <h5>Last Updated: 6 minutes ago</h5>
+
+  <select class="form-control dropdown" id="currencies">
+    <option selected="selected">Select Currency</option>
+    <option id="option" value="EUR" >Euro</option>
+    <option id="option" value="USD">US Dollars</option>
+    <option id="option" value="CAD">CAD Dollars</option>
+  </select> 
+  <h4 id="currencyRate"></h4>
+  <h5 id="timer">Last Updated: 1 minutes ago</h5>
   <label class="switch">
     <input type="checkbox">
     <span class="slider round"></span>

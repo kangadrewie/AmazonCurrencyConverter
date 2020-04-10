@@ -1,68 +1,46 @@
-let currencySelection;
+let currencySelection = 'EUR';	
 
-// chrome.storage.local.get(function(result){console.log(result)})
 
-chrome.storage.sync.get(["currencyName"], function(data) {
-	if(typeof data.currencyName == "undefined") {
-	    console.log('Returns undefined')
-	} else {
-		currencySelection = data.currencyName;
-		console.log(data.currencyName)
-		return currencySelection
-		
-	    }
-});
+fetchRates = (currencySelection) => {
 
-function refreshSelection() {
+	timer = new Date();
+	lastUpdated = timer.getMinutes();
+
 	chrome.storage.sync.get(["currencyName"], function(data) {
 		if(typeof data.currencyName == "undefined") {
+
 		    console.log('Returns undefined')
+
 		} else {
-			currencySelection = data.currencyName;
-			console.log(data.currencyName)
-			return currencySelection
 			
-		    }
+			currencySelection = data.currencyName;
+			
+			return currencySelection
+	    }
+	});
+	console.log(currencySelection);
+	fetch(`https://api.exchangeratesapi.io/latest?base=GBP&symbols=${currencySelection}`)
+		.then((response) => {
+			console.log('fetched');
+			return response.json();
+		})
+	.then((data) => {
+		console.log(data.rates[currencySelection])
+		return data.rates[currencySelection];
+	  })
+	.then((currency) => {
+		console.log('fetched');
+		chrome.storage.sync.set({"currency": currency, "timer": lastUpdated});
+		// $('body').load(url); //<- Use this on any event in which you want to refresh the content
 	});
 };
 
 
 
+// fetchRates(currencySelection);
+
+// setInterval(function() {
+// 	fetchRates(currencySelection);
+// }, 900000);
 
 
-function fetchRates() {
-	console.log('fetched')
-	fetch('https://api.exchangeratesapi.io/latest?base=GBP')
-		.then((response) => {
-			refreshSelection();
-			return response.json();
-		})
-	.then((data) => {
-		return data.rates[currencySelection];
-	  })
-	.then((currency) => {
-		chrome.storage.sync.set({currency: currency});
-
-		chrome.tabs.onUpdated.addListener(function (tabId , info) {
-
-			let currencySelection;
-			let currency;
-			chrome.storage.sync.get(["currencyName", "currency"], function(data) {
-				currencySelection = data.currencyName;
-				currency = data.currency
-				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-				var activeTab = tabs[0];
-				chrome.tabs.sendMessage(activeTab.id, {"status" : "loading", "currency": currency, "currencyName" : currencySelection});
-				console.log(currency, currencySelection, 'BEFORE SENT TO CONTENT')
-			});
-
-
-			});
-
-		});
-	});
-}
-
-
-
-fetchRates();
