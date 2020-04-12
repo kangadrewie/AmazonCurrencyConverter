@@ -10,7 +10,7 @@ wholeFractionConversion = (elementName) => {
 
 		if (elementName[i].innerText === '£') {
 			price = (elementName[i+1].innerText.trim().replace(/(\r\n|\n|\r)/gm, "") + elementName[i+2].innerText.trim());
-			conversion = (parseFloat(price) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+			conversion = (parseFloat(price.replace(/[, ]+/g, "")) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
 			elementName[i].innerText = currencyStringSymbol;
 		
@@ -21,6 +21,22 @@ wholeFractionConversion = (elementName) => {
 	}
 };
 
+priceColour = () => {
+	n = document.querySelectorAll('.a-size-base, .a-color-price, .a-text-bold, .a-size-small, .a-color-secondary, .a-text-strike');
+
+	Array.from(n).forEach((element, index) => {
+
+		price = n[index].innerText;
+
+		if (price.startsWith('£')) {
+			conversion = (parseFloat(price.substring(1, price.length).replace(/[, ]+/g, "")) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+			n[index].innerText = currencyStringSymbol + conversion;
+		}
+
+	});
+};
+
 discountPriceConversion = () => {
 	z = document.querySelectorAll('.a-text-price');
 
@@ -29,7 +45,7 @@ discountPriceConversion = () => {
 		price = z[index].innerText;
 
 		if (price.startsWith('£')) {
-			conversion = (parseFloat(price.substring(1, price.length)) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+			conversion = (parseFloat(price.substring(1, price.length).replace(/[, ]+/g, "")) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
 			z[index].innerText = currencyStringSymbol + conversion;
 		}
@@ -38,13 +54,13 @@ discountPriceConversion = () => {
 };
 
 itemPageConversion = () => {
-	x = document.querySelectorAll('.a-list-item, [data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, .a-size-medium, .a-color-price');
+	x = document.querySelectorAll('.a-list-item, [data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, .a-size-medium, .a-color-price, .a-text-bold');
 	Array.from(x).forEach((element, index) => {
 	price = x[index].innerHTML.trim().replace(/\s/g&&',', "");
 
 	if (price.startsWith('£')) {
 
-		conversion = (parseFloat(price.substring(1, price.length)) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+		conversion = (parseFloat(price.substring(1, price.length).replace(/[, ]+/g, "")) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 		x[index].innerHTML = currencyStringSymbol + conversion.toString();
 		}
 	});
@@ -57,7 +73,8 @@ conversion = () => {
 		discountPriceConversion();
 
 	} else if (document.URL.indexOf("https://www.amazon.co.uk/b/?node=") >= 0){
-		wholeFractionConversion();	
+		wholeFractionConversion();
+		priceColour();
 
 	} else if (document.URL.indexOf("https://www.amazon.co.uk/b/ref=") >= 0){
 		itemPageConversion();
