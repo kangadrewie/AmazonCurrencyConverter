@@ -1,108 +1,59 @@
 let currency;
 let currencyStringSymbol = '€';
+let counter = 0;
+let price;
+
+wholeFractionConversion = (elementName) => {
+	elementName = document.querySelectorAll('.a-price-symbol, .a-price-whole, .a-price-fraction');
+
+	for (i=0; i < elementName.length; i+=3) {
+
+		if (elementName[i].innerText === '£') {
+			price = (elementName[i+1].innerText.trim().replace(/(\r\n|\n|\r)/gm, "") + elementName[i+2].innerText.trim());
+			conversion = (parseFloat(price) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+			elementName[i].innerText = currencyStringSymbol;
+		
+			elementName[i+1].innerText = conversion.substring(0, (conversion.length - 3));
+
+			elementName[i+2].innerText = conversion.substring((conversion.length - 2), conversion.length);
+		}
+	}
+};
+
+itemPageConversion = () => {
+	x = document.querySelectorAll('.a-list-item, [data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, .a-size-medium, .a-color-price');
+	Array.from(x).forEach((element, index) => {
+	price = x[index].innerHTML.trim().replace(/\s/g&&',', "");
+
+	if (price.startsWith('£')) {
+
+		conversion = (parseFloat(price.substring(1, price.length)) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+		x[index].innerHTML = currencyStringSymbol + conversion.toString();
+		}
+	});
+}
 
 conversion = () => {
 
-	if (document.URL.indexOf("https://www.amazon.co.uk/s?k=") >= 0){
-		y = document.querySelectorAll('.a-offscreen, .a-price-whole, .a-price-fraction');
-		Array.from(y).forEach((element, index) => {
-			// console.log(currency)
-			element = y[index].innerHTML
-			element_stripped = element.trim()
+	if (document.URL.indexOf("https://www.amazon.co.uk/s?k=") >= 0){		
+		wholeFractionConversion();
 
-			if (element_stripped.startsWith('£')) {
+	} else if (document.URL.indexOf("https://www.amazon.co.uk/b/?node=") >= 0){
+		wholeFractionConversion();	
 
-				price = y[index].innerText;
-				price_cleaned = price.replace(/\s/g&&',', "");
-				price_stripped = price_cleaned.substring(1, price.length);
+	} else if (document.URL.indexOf("https://www.amazon.co.uk/b/ref=") >= 0){
+		itemPageConversion();
+		wholeFractionConversion();
 
-				conversion = (parseFloat(price_stripped) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-				y[index].innerHTML = currencyStringSymbol + conversion.toString();
-				}
-
-				if (y[index].innerText.startsWith(currencyStringSymbol)) {
-					y[index].classList.remove('a-offscreen')
-					y[index].classList.toggle('a-price-whole')
-
-				} else {
-					y[index].classList.remove('a-price-whole')
-					y[index].classList.remove('a-price-fraction')
-					y[index].style.display = 'none'
-				}
-				
-		});
-
-		currencySymbol = document.querySelectorAll('.a-price-symbol');
-		Array.from(currencySymbol).forEach((element, index) => {
-			currencySymbol[index].classList.remove('a-price-symbol')
-			currencySymbol[index].style.display = 'none'
-		});
-
-		discountPrice = document.querySelectorAll('span[aria-hidden="true"]')
-		Array.from(discountPrice).forEach((element, index) => {
-			// discountPrice[index].classList.remove('a-price-symbol')
-			discountPrice[index].style.display = 'none'
-		});
+	} else {
+		itemPageConversion();
+		wholeFractionConversion();
 	}
 
-	x = document.querySelectorAll('.a-list-item, [data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, a-size-medium, a-color-price');
-	Array.from(x).forEach((element, index) => {
-		// console.log(currency)
-		element = x[index].innerHTML
-		element_stripped = element.trim()
+};
+		
 
-		if (element_stripped.startsWith('£')) {
-
-			price = x[index].innerText;
-			price_cleaned = price.replace(/\s/g&&',', "");
-			price_stripped = price_cleaned.substring(1, price.length);
-
-			conversion = (parseFloat(price_stripped) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-			x[index].innerHTML = currencyStringSymbol + conversion.toString();
-			}
-		});
-
-	y = document.querySelectorAll('.a-offscreen, .a-price-whole, .a-price-fraction');
-		Array.from(y).forEach((element, index) => {
-			// console.log(currency)
-			element = y[index].innerHTML
-			element_stripped = element.trim()
-
-			if (element_stripped.startsWith('£')) {
-
-				price = y[index].innerText;
-				price_cleaned = price.replace(/\s/g&&',', "");
-				price_stripped = price_cleaned.substring(1, price.length);
-
-				conversion = (parseFloat(price_stripped) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-				y[index].innerHTML = currencyStringSymbol + conversion.toString();
-				}
-
-				if (y[index].innerText.startsWith(currencyStringSymbol)) {
-					y[index].classList.remove('a-offscreen')
-					y[index].classList.toggle('a-price-whole')
-
-				} else {
-					y[index].classList.remove('a-price-whole')
-					y[index].classList.remove('a-price-fraction')
-					y[index].style.display = 'none'
-				}
-				
-		});
-
-		currencySymbol = document.querySelectorAll('.a-price-symbol');
-		Array.from(currencySymbol).forEach((element, index) => {
-			currencySymbol[index].classList.remove('a-price-symbol')
-			currencySymbol[index].style.display = 'none'
-		});
-
-		discountPrice = document.querySelectorAll('span[aria-hidden="true"]')
-		Array.from(discountPrice).forEach((element, index) => {
-			// discountPrice[index].classList.remove('a-price-symbol')
-			discountPrice[index].style.display = 'none'
-		});
-
-}
 
 
 
@@ -129,9 +80,6 @@ initialiseSetup();
 
 chrome.runtime.onMessage.addListener(function(request) {
 	if (request.updatePageStatus === 'reloadPage') {
-		console.log('reload')
 		window.location.reload();
-	} else {
-		console.log('Undefined');
 	}
 })
