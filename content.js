@@ -21,6 +21,22 @@ wholeFractionConversion = (elementName) => {
 	}
 };
 
+discountPriceConversion = () => {
+	z = document.querySelectorAll('.a-text-price');
+
+	Array.from(z).forEach((element, index) => {
+
+		price = z[index].innerText;
+
+		if (price.startsWith('£')) {
+			conversion = (parseFloat(price.substring(1, price.length)) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+			z[index].innerText = currencyStringSymbol + conversion;
+		}
+
+	});
+};
+
 itemPageConversion = () => {
 	x = document.querySelectorAll('.a-list-item, [data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, .a-size-medium, .a-color-price');
 	Array.from(x).forEach((element, index) => {
@@ -32,12 +48,13 @@ itemPageConversion = () => {
 		x[index].innerHTML = currencyStringSymbol + conversion.toString();
 		}
 	});
-}
+};
 
 conversion = () => {
 
 	if (document.URL.indexOf("https://www.amazon.co.uk/s?k=") >= 0){		
 		wholeFractionConversion();
+		discountPriceConversion();
 
 	} else if (document.URL.indexOf("https://www.amazon.co.uk/b/?node=") >= 0){
 		wholeFractionConversion();	
@@ -53,9 +70,6 @@ conversion = () => {
 
 };
 		
-
-
-
 
 initialiseSetup = () => {
 	chrome.storage.sync.get(["currency", "currencyName"], function(data) {
@@ -82,4 +96,4 @@ chrome.runtime.onMessage.addListener(function(request) {
 	if (request.updatePageStatus === 'reloadPage') {
 		window.location.reload();
 	}
-})
+});
