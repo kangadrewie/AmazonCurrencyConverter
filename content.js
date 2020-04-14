@@ -2,21 +2,38 @@ let currency;
 let currencyStringSymbol = '€';
 let counter = 0;
 let price;
+let step = 3;
 
 wholeFractionConversion = (elementName) => {
 	elementName = document.querySelectorAll('.a-price-symbol, .a-price-whole, .a-price-fraction');
 
-	for (i=0; i < elementName.length; i+=3) {
+	for (i=0; i < elementName.length; i+=step) {
 
 		if (elementName[i].innerText === '£') {
 			price = (elementName[i+1].innerText.trim().replace(/(\r\n|\n|\r)/gm, "") + elementName[i+2].innerText.trim());
 			conversion = (parseFloat(price.replace(/[, ]+/g, "")) * currency).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-			elementName[i].innerText = currencyStringSymbol;
-		
-			elementName[i+1].innerText = conversion.substring(0, (conversion.length - 3));
+			if (elementName[i].classList.contains('a-price-symbol')) {
+				elementName[i].innerText = currencyStringSymbol;
+				step = 3;
+			} else {
+				step = 2;
+			}
 
-			elementName[i+2].innerText = conversion.substring((conversion.length - 2), conversion.length);
+			if (elementName[i+1].classList.contains('a-price-whole')) {
+				elementName[i+1].innerText = conversion.substring(0, (conversion.length - 3));
+				step = 3;				
+			} else {
+				step = 2;
+			} 
+
+			if (elementName[i+2].classList.contains('a-price-fraction')) {
+				elementName[i+2].innerText = conversion.substring((conversion.length - 2), conversion.length);	
+				step = 3;
+
+			} else {
+				step = 2;
+			};
 		}
 	}
 };
@@ -54,7 +71,7 @@ discountPriceConversion = () => {
 };
 
 itemPageConversion = () => {
-	x = document.querySelectorAll('.a-list-item, [data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, .a-size-medium, .a-color-price, .a-text-bold');
+	x = document.querySelectorAll('.a-list-item, [data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, .a-size-medium, .a-color-price, .a-text-bold, .ewc-subtotal-price, .ewc-price, .ewc-color-price');
 	Array.from(x).forEach((element, index) => {
 	price = x[index].innerHTML.trim().replace(/\s/g&&',', "");
 
