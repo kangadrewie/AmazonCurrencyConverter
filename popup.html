@@ -13,27 +13,32 @@
 </head>
 <body>
 
-
-
 <div id="container">
-  <img src="Logo.png">
-  <h2 id="hello">AMAZON CURRENCY COVERTER</h2>
+  <img id="logo-font" src="logo-bandy-01.png">
+  <h2 id="title">AMAZON CURRENCY<br>COVERTER</h2>
 
   <select class="form-control dropdown" id="currencies">
-    <option selected="selected">Select Currency</option>
-    <option id="option" value="EUR" >Euro</option>
+    <option selected="selected" id="option" value="EUR">Euro</option>
     <option id="option" value="USD">US Dollars</option>
     <option id="option" value="CAD">CAD Dollars</option>
   </select> 
   <h4 id="currencyRate"></h4>
   <h5 id="timer">Last Updated: 1 minutes ago</h5>
-  <label class="switch">
-    <input type="checkbox">
-    <span class="slider round"></span>
-</label>
 </div>
 
+<img id="info-icon" src="info-icon.svg">
+<img id="close-icon" src="close-icon.png">
+<div id="info-box">
+  <img id="logo" src="Logo.png">
+
+  <div id="title">Bandy is an open sourced currency converter for Amazon.co.uk. </div>
+  <div id="title">Bandy fetches the latest rates from openexchangerates.org and saves you the hassle of converting prices.</div>
+  <div id="guideline">Amazon exchange rates may differ slightly.</div>
+  <div id="report-issues"><a href="mailto:bandycurrencyconverter@gmail.com?Subject=I've%20Found%20an%20Issue" target="_top">REPORT ISSUES</a></div>
 </div>
+<div id="bg"></div>
+
+
   <script type="text/javascript" src="popup.js"></script>
   <script type="text/javascript" src="background.js"></script>
 </body>
