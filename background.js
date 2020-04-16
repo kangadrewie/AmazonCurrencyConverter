@@ -1,10 +1,9 @@
-let currencySelection = 'EUR';	
+let currencySelection ='EUR';
 
+timer = new Date();
+lastUpdated = timer.getMinutes();
 
-fetchRates = (currencySelection) => {
-
-	timer = new Date();
-	lastUpdated = timer.getMinutes();
+fetchRates = (currencySelection, callback) => {
 
 	chrome.storage.sync.get(["currencyName"], function(data) {
 		if(typeof data.currencyName == "undefined") {
@@ -32,13 +31,15 @@ fetchRates = (currencySelection) => {
 		console.log('fetched');
 		chrome.storage.sync.set({"currency": currency, "timer": lastUpdated});
 		// $('body').load(url); //<- Use this on any event in which you want to refresh the content
+		callback();
 	});
 };
 
+// Default Settings for Installation
+chrome.runtime.onInstalled.addListener(function() {
+	chrome.storage.sync.set({"currencyName": "EUR"});
 
-
-// fetchRates(currencySelection);
-
-// setInterval(function() {
-// 	fetchRates(currencySelection);
-// }, 900000);
+	fetchRates(currencySelection, function() {
+		console.log('fetch completed');
+	});
+});
