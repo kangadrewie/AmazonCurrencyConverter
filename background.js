@@ -1,3 +1,6 @@
+// Console logs have been commented out. :g/console.log/s/^/\/\/ 
+// Uncomment using :%s/\/\//
+
 let currencySelection;
 
 updateCurrencySelection = (callback) => {
@@ -5,19 +8,19 @@ updateCurrencySelection = (callback) => {
 		chrome.storage.sync.get(["currencyName"], function(data) {
 		if(typeof data.currencyName == "undefined") {
 
-		    console.log('Returns undefined')
+		    ronsole.log('Returns undefined')
 
 		} else {
 			
 			currencySelection = data.currencyName;
-			console.log(currencySelection);
+//			console.log(currencySelection);
 			resolve(currencySelection)
 	    	}
 		});
 	})
 	.then((currencySelection) => {
 		fetchRates(function() {
-			console.log('Change Selection Fetched');
+//			console.log('Change Selection Fetched');
 			refreshPopupRates();
 		})
 	});
@@ -34,7 +37,7 @@ fetchRates = (callback) => {
 			return response.json();
 		})
 	.then((data) => {
-		console.log(data.rates[currencySelection]);
+//		console.log(data.rates[currencySelection]);
 		return data.rates[currencySelection];
 	  })
 	.then((currency) => {
@@ -52,19 +55,20 @@ fetchRates = (callback) => {
 // Default Settings for Installation
 chrome.runtime.onInstalled.addListener(function() {
 
+    // By default, EUR is selected
 	currencySelection = 'EUR'
 	chrome.storage.sync.set({"currencyName": "EUR"});
 
 	fetchRates(function() {
-		console.log('fetch completed');
+//		console.log('fetch completed');
 	});
 });
 
+// Pulls latest rates on Amazon refresh
 chrome.tabs.onUpdated.addListener(function() {
+
 	fetchRates(function() {
-		console.log('Rates Updated');
+//		console.log('Rates Updated');
 	});
 });
-
-
 
