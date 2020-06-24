@@ -8,7 +8,7 @@ updateCurrencySelection = (callback) => {
 		chrome.storage.sync.get(["currencyName"], function(data) {
 		if(typeof data.currencyName == "undefined") {
 
-		    ronsole.log('Returns undefined')
+//		    console.log('Returns undefined')
 
 		} else {
 			
