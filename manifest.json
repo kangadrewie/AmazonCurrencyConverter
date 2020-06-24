@@ -20,11 +20,7 @@
   },
   "content_security_policy": "script-src 'self' https://example.com; object-src 'self'",
   "permissions": [
-      "webNavigation",
-      "activeTab",
-      "tabs",
       "storage",
-      "background",
-      "webRequest"
+      "background"
   ]
 }
