@@ -1,5 +1,3 @@
-chrome.storage.sync.set({currencyName: "EUR"});
-
 refreshPopupRates = () => {
 	
 	timer = new Date();
@@ -16,10 +14,11 @@ refreshPopupRates = () => {
 
 		let timer = document.getElementById('timer');
 		timer.innerHTML = 'Last Updated - ' + ((timerUpdated - data.timer) + 1) + ' minutes ago';
+
 	});
 }
-refreshPopupRates();
 
+refreshPopupRates();
 //Get Dropdown value
 getDropdownValue = () => {
 	var selectedIndex = 1;
@@ -31,16 +30,18 @@ getDropdownValue = () => {
 	chrome.storage.sync.set({currencyName: strUser});
 
 	//Fetch new rates with updated currency
-	fetchRates(strUser, function() {
+	updateCurrencySelection(function() {
 		refreshPopupRates();
+	});
 
-		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-			chrome.tabs.sendMessage(tabs[0].id, {updatePageStatus: "reloadPage"});
-		});
-	});	
+	//Send Message to content.js to refresh page.
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, {updatePageStatus: "reloadPage"});
+	});		
 }
 
 document.getElementById('currencies').addEventListener("change", getDropdownValue);
+// document.getElementById('currencies').addEventListener("click", getDropdownValue);
 
 infoIcon = () => {
 	let icon = document.getElementById('info-icon');

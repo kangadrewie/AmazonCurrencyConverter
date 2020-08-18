@@ -6,7 +6,7 @@ let currencySelection;
 updateCurrencySelection = (callback) => {
 	return new Promise((resolve, reject) => {
 		chrome.storage.sync.get(["currencyName"], function(data) {
-		if(typeof data.currencyName == "undefined") {
+		if (typeof data.currencyName == "undefined") {
 
 //		    console.log('Returns undefined')
 
@@ -70,5 +70,17 @@ chrome.tabs.onUpdated.addListener(function() {
 	fetchRates(function() {
 //		console.log('Rates Updated');
 	});
+
+    console.log(document.domain); //It outputs id of extension to console
+    chrome.tabs.query({ //This method output active URL
+        "active": true,
+        "currentWindow": true,
+        "status": "complete",
+        "windowType": "normal"
+    }, function (tabs) {
+        for (tab in tabs) {
+            console.log(tabs[tab].url);
+        }
+    });
 });
 

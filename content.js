@@ -71,7 +71,7 @@ discountPriceConversion = () => {
 };
 
 itemPageConversion = () => {
-	x = document.querySelectorAll('.a-list-item, [data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .a-color-price, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, .a-size-medium, .a-color-price, .a-text-bold, .ewc-subtotal-price, .ewc-price, .ewc-color-price');
+	x = document.querySelectorAll('.a-list-item, [data-maple-math], .a-color-secondary, .olp-from, nobr, #price_inside_buybox, .p13n-sc-price, .a-text-strike, .cost-after-savings, .twisterSwatchPrice, .olp-from, .a-color-base, .a-price-whole, .a-size-medium, .a-color-price, .a-text-bold, .ewc-subtotal-price, .ewc-price, .ewc-color-price');
 	Array.from(x).forEach((element, index) => {
 	price = x[index].innerHTML.trim().replace(/\s/g&&',', "");
 
